@@ -24,7 +24,7 @@ export default function Home() {
                          shadow-2xl shadow-purple-600/100
                          hover:scale-105
                          hover:shadow-cyan-400/30
-                         transition-all duration-300">Scan Now</button> <Link/>
+                         transition-all duration-300">Scan Now</button> </Link>Link>
     </div>
   );
 }
