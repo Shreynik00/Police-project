@@ -11,6 +11,7 @@ export default function Home() {
       <p className="goldman-regular text-white text-5xl mt-16 px-96 text-center">
         TRINETRA OSINT provides a scalable, secure, and precise solution for automated contact data management. We extract, validate, and standardize contact information, backed by enterprise-grade security protocols and centralized user management.
       </p>
+       <Link to="/login">
       <button className="goldman-bold 
                          mt-20
                          px-20
@@ -23,7 +24,7 @@ export default function Home() {
                          shadow-2xl shadow-purple-600/100
                          hover:scale-105
                          hover:shadow-cyan-400/30
-                         transition-all duration-300">Scan Now</button>
+                         transition-all duration-300">Scan Now</button> <Link/>
     </div>
   );
 }
