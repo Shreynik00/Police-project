@@ -1,5 +1,6 @@
 import Home from "./pages/home";
 import Login from "./pages/login";
+import Service from "./pages/service";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 function App() {
@@ -11,6 +12,10 @@ function App() {
     {
       path: "/login",
       element: <Login />,
+    },
+    {
+      path: "/service",
+      element: <Service />,
     },
   ]);
 
