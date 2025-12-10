@@ -1,0 +1,122 @@
+@import url('https://fonts.googleapis.com/css2?family=Goldman:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Alexandria:wght@100..900&family=Goldman:wght@400;700&display=swap');
+
+
+
+body {
+  background: black;
+}
+
+/* Text Fonts */
+.goldman-regular {
+  font-family: "Goldman", sans-serif;
+  font-weight: 400;
+}
+
+.goldman-bold {
+  font-family: "Goldman", sans-serif;
+  font-weight: 700;
+}
+
+.title {
+  font-family: "Goldman", sans-serif;
+  font-size: 9rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  background: linear-gradient(90deg, #00FFDD 24%, #00EAFF 60%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-top: -23vh;
+ 
+    
+}
+
+.alexandria {
+  font-family: "Alexandria", sans-serif;
+  font-weight: 400;
+}
+
+/* Login Page CSS */
+.login-container {
+  width: 100vw;
+  height: 100vh;
+  background: #000;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Input Box */
+.login-box {
+  width: 1300px;
+  background: #020b0f;
+  border: 6px solid #00eaff;
+  border-radius: 40px;
+  padding: 40px;
+  box-shadow: 0 0 25px rgba(0, 255, 255, 0.2);
+
+  display: flex;
+  flex-direction: column;     /* stack children vertically */
+}
+
+
+.input-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 25px;
+}
+
+.input-group label {
+  color: white;
+  font-size: 44px;
+  width: 200px; /* fixed label width so alignment is perfect */
+}
+
+.input-group input {
+  flex: 1;
+  padding: 12px;
+  font-size: 26px;
+  border-radius: 8px;
+  border: none;
+  background: #e2e8f0;
+  color: #000;
+}
+
+
+.login-btn {
+  width: 1010px;               /* smaller width so it can float right */
+  padding: 14px;
+  font-size: 22px;
+  font-weight: bold;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  background: linear-gradient(to right, #00eaff, #008b8b);
+  margin-top: 10px;
+
+  align-self: flex-end;       /* THIS pushes button to the right */
+}
+
+
+.note {
+  text-align: center;
+  color: white;
+  font-size: 34px;
+  margin-top: 20px;
+  margin-left: 60px;
+}
+
+.message {
+  text-align: center;
+  color: #ff4d4d;
+  margin-top: 10px;
+}
