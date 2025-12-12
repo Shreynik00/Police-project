@@ -19,12 +19,15 @@ body{
 }
 
 .neon-text {
-  font-family: 'Goldman', sans-serif;
-  color: #00f6ff;
-  letter-spacing: 0.1em;
+  font-family: "Goldman", sans-serif;
   font-size: 10rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  background: linear-gradient(90deg, #00FFDD 24%, #00EAFF 60%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   text-shadow:
-    5px 5px 15px #00f6ff
+    5px 5px 5px #00f6ff
 }
 
 .alexandria {

@@ -1,84 +1,63 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import "./css/Login.css";
 
-function Login() {
-  const navigate = useNavigate();
-
-  const credentials = {
-    username: "shreynik",
-    password: "12345",
-  };
-
-  const [email, setEmail] = useState("");
+export default function Login() {
+  const [usernameOrEmail, setUsernameOrEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleLogin = async () => {
+    const response = await fetch("https://police-project-backend-68ng.vercel.app/api/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        action:'login',
+        identifier: usernameOrEmail,
+        password,
+      }),
+    });
 
-    if (email === credentials.username && password === credentials.password) {
-      navigate("/service", { state: { username: email } });
-    } else {
-      setError("Invalid Email or Password");
-    }
+    const data = await response.json();
+    setMessage(data.message);
   };
 
   return (
-    <div className="w-screen h-screen bg-gray-700 flex items-center justify-center">
-      <div className="bg-black border border-cyan-400 rounded-xl p-10 w-[650px] text-center shadow-xl shadow-cyan-500/20">
-        <h1 className="text-cyan-400 text-4xl font-bold tracking-widest mb-10">
-          TRINETRA OSINT
-        </h1>
+    <div className="login-container">
+      
+      {/* Heading outside the box */}
+      <h1 className="title">TRINETRA OSINT</h1>
 
-        <div className="border-2 border-cyan-400 rounded-xl py-10 px-6 bg-[#001a1a]">
-          <form
-            onSubmit={handleSubmit}
-            className="flex flex-col space-y-8 items-center"
-          >
-            <div className="flex flex-col text-left w-full max-w-md">
-              <label className="text-white text-xl mb-1">Email</label>
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="px-4 py-2 rounded-md bg-gray-100 text-black outline-none"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </div>
-
-            <div className="flex flex-col text-left w-full max-w-md">
-              <label className="text-white text-xl mb-1">Password</label>
-              <input
-                type="password"
-                placeholder="Enter your Password"
-                className="px-4 py-2 rounded-md bg-gray-100 text-black outline-none"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </div>
-
-            {error && (
-              <p className="text-red-500 text-sm">{error}</p>
-            )}
-
-            <button
-              type="submit"
-              className="bg-gradient-to-r from-cyan-500 to-cyan-300 text-black text-xl font-semibold py-2 px-10 rounded-md hover:opacity-90 transition-all"
-            >
-              Login In
-            </button>
-          </form>
-
-          <p className="text-gray-300 text-sm mt-6">
-            Need access? Contact your administrator <br />
-            to create an account.
-          </p>
+      {/* Only one main box for inputs */}
+      
+      <div className="login-box">
+        <div className="input-group">
+          <label>Email</label>
+          <input
+            type="text"
+            placeholder="Enter your email"
+            onChange={(e) => setUsernameOrEmail(e.target.value)}
+          />
         </div>
+
+        <div className="input-group">
+          <label>Password</label>
+          <input
+            type="password"
+            placeholder="Enter your Password"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+
+        <button onClick={handleLogin} className="login-btn">
+          Login In
+        </button>
+
+        <p className="note">
+          Need access? Contact your administrator to create an account.
+        </p>
+
+        <p className="message">{message}</p>
       </div>
     </div>
   );
 }
-
-export default Login;
