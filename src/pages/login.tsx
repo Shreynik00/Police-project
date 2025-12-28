@@ -1,10 +1,15 @@
 import React, { useState ,  useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
 import "./css/Login.css";
 
 export default function Login() {
   const [usernameOrEmail, setUsernameOrEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+
+  const navigate = useNavigate();
+
 
   const handleLogin = async () => {
     const response = await fetch("https://police-project-backend-68ng.vercel.app/api/login", {
@@ -23,9 +28,19 @@ export default function Login() {
         return;
       }
    
-      localStorage.setItem("username", JSON.stringify(data.user.username));
-       localStorage.setItem("token", JSON.stringify(data.token));
+      localStorage.removeItem("token");
+localStorage.removeItem("username");
+
+// OR (if you want to clear everything for your app)
+localStorage.clear();
+
+
+     localStorage.setItem("username", data.user.username);
+localStorage.setItem("token", data.token);
+console.log(data.token);
+
      setMessage("✅ Login successful");
+      navigate("/service");
   };
 
   return (
@@ -68,3 +83,6 @@ export default function Login() {
     </div>
   );
 }
+
+
+
