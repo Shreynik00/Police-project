@@ -8,6 +8,8 @@ export default function Service() {
   const [number, setNumber] = useState("");
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [credits, setCredits] = useState(0);
+
 
  
  const getCredits = async () => { 
@@ -24,6 +26,9 @@ export default function Service() {
     const result = await response.json();
     const credits=  result.credit;
     console.log(credits);
+      // ✅ SAVE TO STATE
+    setCredits(result.credit);
+
 
 
   }
@@ -51,7 +56,7 @@ export default function Service() {
       alert("Server Error");
     } finally {
       setLoading(false);
-      getCredits();
+     
     }
   };
  getCredits();
@@ -113,7 +118,8 @@ export default function Service() {
 
         <div className="credits-box">
           <span className="credits-text">Credits</span>
-          <span className="credits-count">100</span>
+            <span className="credits-count">{credits}</span>
+
         </div>
       </header>
 
