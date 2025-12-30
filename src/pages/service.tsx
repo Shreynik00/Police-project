@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./css/Service.css";
+//import "./css/Service.css";
 
 function Login() {
   const [user, setUser] = useState(null);
