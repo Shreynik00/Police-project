@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-//import "./css/Service.css";
 
 function Login() {
   const [user, setUser] = useState(null);
@@ -62,61 +61,32 @@ function Login() {
 
     verifyUser();
   }, []);
-if (error) {
+
+  if (error) {
+    return (
+      <div className="h-screen flex justify-center items-center text-red-500">
+        {error}
+      </div>
+    );
+  }
+
+  if (!user) {
+    return (
+      <div className="h-screen flex justify-center items-center text-white">
+        Verifying...
+      </div>
+    );
+  }
+
   return (
-    <div className="full-screen center red-text">
-      {error}
+    <div className="h-screen flex flex-col justify-center items-center bg-black text-white gap-10">
+      <h1 className="text-6xl font-bold">
+        Welcome 
+      </h1>
+      <p className="text-3xl opacity-75">You are authenticated!</p>
     </div>
   );
-}
-
-if (!user) {
-  return (
-    <div className="full-screen center white-text">
-      Verifying...
-    </div>
-  );
-}
-
-return (
-  <div className="service-page">
-    {/* Header */}
-    <header className="service-header">
-      <h1 className="logo">TRINETRA <span>OSINT</span></h1>
-
-      <div className="credits-box">
-        <span className="credits-text">Credits</span>
-        <span className="credits-count">100</span>
-      </div>
-    </header>
-
-    {/* Main Card */}
-    <div className="scan-card">
-      <div className="input-row">
-        <div className="input-group">
-          <label>Phone Number</label>
-          <input
-            type="text"
-            placeholder="Enter Phone Number to scan"
-          />
-        </div>
-
-        <button className="scan-btn">Scan Now</button>
-      </div>
-
-      <div className="result-label">Result :</div>
-
-      <div className="result-box">
-        {/* API result will render here */}
-      </div>
-
-      <div className="download-row">
-        <button className="download-btn">Download pdf</button>
-      </div>
-    </div>
-  </div>
-);
-
 }
 
 export default Login;
+
