@@ -1,78 +1,52 @@
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./css/scan.css";
 
+type User = {
+  username?: string;
+};
+
 export default function Service() {
-  const [ setUser] = useState(null);
-  const [ setError] = useState("");
-  const [number, setNumber] = useState("");
-  const [result, setResult] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [credits, setCredits] = useState(0);
+  const [user, setUser] = useState<User | null>(null);
+  const [error, setError] = useState<string>("");
+  const [number, setNumber] = useState<string>("");
+  const [result, setResult] = useState<Record<string, any> | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [credits, setCredits] = useState<number>(0);
 
-
- 
- const getCredits = async () => { 
-  try{
-    const username = localStorage.getItem("username");
-    const response = await fetch(
-      "https://police-project-backend-68ng.vercel.app/api/getCredits",
-      {
-        method:"POST",
-        headers : { "Content-Type": "application/json" },
-        body : JSON.stringify({username})
-      }
-    );
-    const result = await response.json();
-    const credits=  result.credit;
-    console.log(credits);
-      // ✅ SAVE TO STATE
-    setCredits(result.credit);
-
-
-
-  }
-  catch(err){
-    setError("server error in fetching credits");
-  }
-}
-
-  const scanNumber = async () => {
-    if (!number) return alert("Enter a number first!");
-    setLoading(true);
-
-    try {
-      const response = await fetch("https://police-project-backend-68ng.vercel.app/api/MobileApiCall", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({  number })
-      });
-
-      const data = await response.json();
-      console.log(data);
-      setResult(data);
-    } catch (err) {
-      console.error(err);
-      alert("Server Error");
-    } finally {
-      setLoading(false);
-     
-    }
-  };
- getCredits();
   const navigate = useNavigate();
 
+  // ✅ FETCH CREDITS
+  const getCredits = async () => {
+    try {
+      const username = localStorage.getItem("username");
+      if (!username) return;
 
+      const response = await fetch(
+        "https://police-project-backend-68ng.vercel.app/api/getCredits",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username }),
+        }
+      );
+
+      const data = await response.json();
+      setCredits(data.credit ?? 0);
+    } catch {
+      setError("Server error in fetching credits");
+    }
+  };
+
+  // ✅ VERIFY USER ONCE
   useEffect(() => {
     const verifyUser = async () => {
       const token = localStorage.getItem("token");
 
       if (!token) {
-         setError("No token found");
-      
-      setTimeout(() => {
-        navigate("/login");
-      }, 4000); // 2 seconds delay
+        setError("No token found");
+        setTimeout(() => navigate("/login"), 4000);
+        return;
       }
 
       try {
@@ -80,37 +54,59 @@ export default function Service() {
           "https://police-project-backend-68ng.vercel.app/api/verify",
           {
             method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-           body: JSON.stringify({ token })
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ token }),
           }
         );
 
         const data = await response.json();
 
         if (!data.success) {
-         if (!token) {
-      setError("No token found");
-      
-      setTimeout(() => {
-        navigate("/login");
-      }, 4000); // 2 seconds delay
-    }
+          setError("Unauthorized");
+          setTimeout(() => navigate("/login"), 4000);
+          return;
         }
 
         setUser(data.user);
-      } catch (err) {
+        getCredits(); // ✅ only after auth success
+      } catch {
         setError("Server error");
       }
     };
 
     verifyUser();
-  }, []);
+  }, [navigate]);
+
+  // ✅ SCAN NUMBER
+  const scanNumber = async () => {
+    if (!number) {
+      alert("Enter a number first!");
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const response = await fetch(
+        "https://police-project-backend-68ng.vercel.app/api/MobileApiCall",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ number }),
+        }
+      );
+
+      const data = await response.json();
+      setResult(data);
+    } catch {
+      alert("Server Error");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-   <div className="service-page">
-      {/* Header */}
+    <div className="service-page">
       <header className="service-header">
         <h1 className="logo">
           TRINETRA <span>OSINT</span>
@@ -118,16 +114,14 @@ export default function Service() {
 
         <div className="credits-box">
           <span className="credits-text">Credits</span>
-            <span className="credits-count">{credits}</span>
-
+          <span className="credits-count">{credits}</span>
         </div>
       </header>
 
-      {/* Main Card */}
       <div className="scan-card">
         <div className="input-row">
           <div className="input-group">
-            <label>Phone Number: </label>
+            <label>Phone Number:</label>
             <input
               type="text"
               placeholder="Enter Phone Number to scan"
@@ -140,8 +134,8 @@ export default function Service() {
             className="scan-btn"
             onClick={scanNumber}
             disabled={loading}
-          >Scan Now
-           
+          >
+            {loading ? "Scanning..." : "Scan Now"}
           </button>
         </div>
 
@@ -158,9 +152,7 @@ export default function Service() {
               </div>
             ))
           ) : (
-            <span className="placeholder-text">
-             
-            </span>
+            <span className="placeholder-text">No result yet</span>
           )}
         </div>
 
@@ -169,6 +161,8 @@ export default function Service() {
             Download PDF
           </button>
         </div>
+
+        {error && <p className="error-text">{error}</p>}
       </div>
     </div>
   );
