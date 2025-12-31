@@ -1,9 +1,10 @@
-import  { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./css/scan.css";
 
 export default function Service() {
- 
+  const [user, setUser] = useState(null);
+  const [error, setError] = useState("");
   const [number, setNumber] = useState("");
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -32,7 +33,7 @@ export default function Service() {
 
   }
   catch(err){
-    console.log(err);
+    setError("server error in fetching credits");
   }
 }
 
@@ -67,7 +68,7 @@ export default function Service() {
       const token = localStorage.getItem("token");
 
       if (!token) {
-         alert("No token found");
+         setError("No token found");
       
       setTimeout(() => {
         navigate("/login");
@@ -90,7 +91,7 @@ export default function Service() {
 
         if (!data.success) {
          if (!token) {
-      alert("No token found");
+      setError("No token found");
       
       setTimeout(() => {
         navigate("/login");
@@ -98,9 +99,9 @@ export default function Service() {
     }
         }
 
-      
+        setUser(data.user);
       } catch (err) {
-        console.log("Server error");
+        setError("Server error");
       }
     };
 
