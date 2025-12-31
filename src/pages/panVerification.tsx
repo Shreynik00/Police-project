@@ -7,8 +7,9 @@ type User = {
 };
 
 export default function Service() {
-  const [user, setUser] = useState<User | null>(null);
   const [error, setError] = useState<string>("");
+const [user, setUser] = useState<any>(null);
+
   const [number, setNumber] = useState<string>("");
   const [result, setResult] = useState<Record<string, any> | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
