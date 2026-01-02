@@ -14,8 +14,8 @@ body {
 /* ===== PAGE ===== */
 .service-page {
   min-height: 100vh;
-  padding: 40px 60px;
-  background: radial-gradient(circle at center, #0f3d33, #000);
+  padding: 30px 40px;
+  background: #2a2a2a;
   color: #fff;
 }
 
@@ -24,21 +24,23 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
 .logo {
-  font-family: 'Goldman', cursive;
-  font-size: 42px;
-   font-family: "Goldman", sans-serif;
-  font-size: 9rem;
+  font-family: "Goldman", sans-serif;
+  font-size: clamp(2rem, 5vw, 4rem);
   font-weight: 700;
   letter-spacing: 0.1em;
- background: linear-gradient(90deg, #00FFDD 24%, #00EAFF 60%);
+  background: linear-gradient(90deg, #00FFDD 24%, #00EAFF 60%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   color: transparent;
-  margin-left: 20vh;
+  margin: 0;
+  flex-shrink: 0;
 }
 
 .logo span {
@@ -47,26 +49,30 @@ body {
 
 .credits-box {
   background: linear-gradient(180deg, #f83131, #c96f6f);
-  padding: 6px 16px;
-  border-radius: 24px;
-  font-family :'Goldman', cursive;
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-family: 'Goldman', cursive;
   text-align: center;
-  font-size: 30px;
-  max-width: 100px;
-    min-width: 190px;
-  min-height: 70px;
-border: 3px solid #00eaff;
+  min-width: 120px;
+  min-height: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: 2px solid #00eaff;
   box-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
 }
 
 .credits-text {
   display: block;
-  
+  font-size: 14px;
+  margin-bottom: 4px;
+  color: #fff;
 }
 
 .credits-count {
- 
+  font-size: 24px;
   font-weight: bold;
+  color: #fff;
 }
 
 /* ===== CARD ===== */
@@ -178,14 +184,126 @@ border: 3px solid #00eaff;
   border: 3px solid #00ffff;
 }
 
+/* ===== SERVICE CARDS GRID ===== */
+.service-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+  max-width: 1800px;
+  margin: 0 auto;
+}
+
+.service-card {
+  background: rgba(0, 0, 0, 0.7);
+  border: 3px solid #00ff00;
+  border-radius: 20px;
+  padding: 25px;
+  box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.service-card:hover {
+  box-shadow: 0 0 30px rgba(0, 255, 0, 0.6);
+  transform: translateY(-5px);
+}
+
+.service-card-image {
+  width: 100%;
+  height: 150px;
+  object-fit: contain;
+  margin-bottom: 15px;
+  filter: drop-shadow(0 0 10px rgba(0, 255, 0, 0.5));
+}
+
+.service-card-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #fff;
+  text-align: center;
+  font-family: 'Goldman', cursive;
+}
+
+.service-card-input-label {
+  width: 100%;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: #ccc;
+  font-family: 'Alexandria', sans-serif;
+}
+
+.service-card-input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 2px solid #00eaff;
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  font-size: 14px;
+  margin-bottom: 15px;
+  outline: none;
+}
+
+.service-card-input:focus {
+  border-color: #00ff00;
+  box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+}
+
+.service-card-button {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 2px solid #00ff00;
+  background: rgba(0, 255, 0, 0.1);
+  color: #00ff00;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  font-family: 'Goldman', cursive;
+  transition: all 0.3s ease;
+}
+
+.service-card-button:hover {
+  background: rgba(0, 255, 0, 0.2);
+  box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
+}
+
+.scan-cost {
+  align-self: flex-start;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: #00ff00;
+  font-family: 'Goldman', cursive;
+}
+
 /* ===== RESPONSIVE ===== */
+@media (max-width: 1600px) {
+  .service-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 1200px) {
+  .service-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
 @media (max-width: 900px) {
   .input-row {
     flex-direction: column;
   }
 
   .logo {
-    font-size: 32px;
+    font-size: 2.5rem;
+  }
+
+  .service-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .scan-card {
@@ -197,12 +315,22 @@ border: 3px solid #00eaff;
   }
 }
 
-@media (max-width: 500px) {
+@media (max-width: 600px) {
   .service-page {
     padding: 20px;
   }
 
+  .service-grid {
+    grid-template-columns: 1fr;
+  }
+
   .credits-box {
-    padding: 8px 16px;
+    padding: 6px 16px;
+    min-width: 100px;
+  }
+
+  .service-header {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
