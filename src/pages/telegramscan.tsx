@@ -41,10 +41,12 @@ export default function Service() {
     setLoading(true);
 
     try {
+
+      const username = localStorage.getItem("username");
       const response = await fetch("https://police-project-backend-68ng.vercel.app/api/MobileApiCall", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({  number })
+        body: JSON.stringify({  number,username })
       });
 
       const data = await response.json();
