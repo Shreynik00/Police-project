@@ -43,7 +43,7 @@ export default function Home() {
       <p
         className="
           goldman-regular text-white
-          text-[clamp(0.85rem,3.4vw,1.8rem)]
+          text-[clamp(0.89rem,3.4vw,2.8rem)]
           mt-8
           text-center
           max-w-[92%]
